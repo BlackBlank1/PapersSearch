@@ -51,4 +51,4 @@ def get_papers(keyword, year):
 
 
 if __name__ == '__main__':
-    get_papers("fake news", "2024")
+    get_papers("rumor", "2024")

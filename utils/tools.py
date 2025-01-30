@@ -2,6 +2,8 @@
 # @File  : tools.py
 # @Author: myarme
 # @Date  : 2025/01/23/10:43
+from datetime import datetime
+
 import translators as ts
 
 
@@ -16,6 +18,19 @@ def translator(text, chunk_size=1000):
             print(f"翻译错误：{e}")
             translated_text += chunk
     return translated_text
+
+
+def sort_papers(papers_list):
+
+    for paper in papers_list:
+        paper['published'] = datetime.strptime(paper['published'], '%Y-%m-%d')
+
+    papers_list.sort(key=lambda x: x['published'], reverse=True)
+
+    for paper in papers_list:
+        paper['published'] = paper['published'].strftime('%Y-%m-%d')
+
+    return papers_list
 
 
 if __name__ == '__main__':
