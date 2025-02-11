@@ -26,7 +26,7 @@ def get_papers_abstract(url):
             download_link = soup.select_one('a[class="obj_galley_link pdf"]')['href']
         except:
             download_link = ''
-        return translator(abstract), download_link
+        return translator(abstract), download_link, abstract
     except:
         return
 
@@ -47,7 +47,7 @@ def get_papers(keyword, year):
             papers_list.append(papers_dict)
             print(papers_dict['title'])
         for paper in papers_list:
-            paper['abstract'], paper['download_link'] = get_papers_abstract(paper['url'])
+            paper['abstract'], paper['download_link'], paper['raw_abstract'] = get_papers_abstract(paper['url'])
             sleep(3)
 
         print(papers_list)

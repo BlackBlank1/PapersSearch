@@ -34,7 +34,7 @@ def get_papers_abstract(url):
             download_link = soup.select_one('div[class="acl-paper-link-block"] > a:nth-child(1)')['href']
         except:
             download_link = ''
-        return translator(abstract), authors, published, download_link
+        return translator(abstract), authors, published, download_link, abstract
     except:
         return
 
@@ -64,7 +64,8 @@ def get_papers(keyword, year):
 
         for paper in papers_list:
 
-            paper['abstract'], paper['authors'], paper['published'], paper['download_link'] = get_papers_abstract(paper['url'])
+            paper['abstract'], paper['authors'], paper['published'], paper['download_link'], paper['raw_abstract'] \
+                = get_papers_abstract(paper['url'])
             sleep(3)
 
         print(papers_list)

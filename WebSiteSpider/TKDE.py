@@ -51,7 +51,7 @@ def get_paper_info(paper_id):
             except:
                 pub_time = ''
             sleep(2)
-            return authors_list, translator(abstract), pub_time
+            return authors_list, translator(abstract), pub_time, abstract
         except:
             return '', '', ''
     else:
@@ -83,10 +83,11 @@ def get_papers(keyword, year):
             paper_dict = {}
             paper_dict['title'] = paper['articleTitle']
             paper_dict['url'] = 'https://ieeexplore.ieee.org' + paper['pdfLink']
-            authors, abstract, pub_time = get_paper_info(paper['articleNumber'])
+            authors, abstract, pub_time, raw_abstract = get_paper_info(paper['articleNumber'])
             paper_dict['published'] = pub_time
             paper_dict['authors'] = authors
             paper_dict['abstract'] = abstract
+            paper_dict['raw_abstract'] = raw_abstract
             paper_dict['download_link'] = ''
             papers_list.append(paper_dict)
             print(paper_dict['title'])
