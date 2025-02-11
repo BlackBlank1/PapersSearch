@@ -18,8 +18,15 @@ def get_papers_abstract(url):
     req = requests.get(url, headers=headers)
     try:
         soup = BeautifulSoup(req.text, 'html.parser')
-        abstract = soup.select_one('section[class="item abstract"]').text.strip().split("Abstract")[1].strip()
-        return translator(abstract)
+        try:
+            abstract = soup.select_one('section[class="item abstract"]').text.strip().split("Abstract")[1].strip()
+        except:
+            abstract = ''
+        try:
+            download_link = soup.select_one('a[class="obj_galley_link pdf"]')['href']
+        except:
+            download_link = ''
+        return translator(abstract), download_link
     except:
         return
 
@@ -38,9 +45,9 @@ def get_papers(keyword, year):
                            'authors': i.select_one('div.authors').text.strip(),
                            'published': i.select_one('div.published').text.strip()}
             papers_list.append(papers_dict)
-
+            print(papers_dict['title'])
         for paper in papers_list:
-            paper['abstract'] = get_papers_abstract(paper['url'])
+            paper['abstract'], paper['download_link'] = get_papers_abstract(paper['url'])
             sleep(3)
 
         print(papers_list)

@@ -60,15 +60,15 @@ def get_paper_info(paper_id):
 
 def get_papers(keyword, year):
     json_data = {
-        'queryText': keyword,
+        'queryText': "TKDE",
         'highlight': True,
         'returnType': 'SEARCH',
         'matchPubs': True,
         'searchWithin': [
-            '"Publication Number":69',
+            keyword,
         ],
         'ranges': [
-            f'{year}_Year',
+            f'{year}_{year}_Year',
         ],
         'returnFacets': [
             'ALL',
@@ -87,6 +87,7 @@ def get_papers(keyword, year):
             paper_dict['published'] = pub_time
             paper_dict['authors'] = authors
             paper_dict['abstract'] = abstract
+            paper_dict['download_link'] = ''
             papers_list.append(paper_dict)
             print(paper_dict['title'])
             sleep(1)
@@ -96,5 +97,5 @@ def get_papers(keyword, year):
 
 
 if __name__ == '__main__':
-    data = get_papers('fake news', '2025')
+    data = get_papers('fake news', '2024')
     print(data)
